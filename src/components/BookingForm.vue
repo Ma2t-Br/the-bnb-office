@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import type { Seat, Booking } from '../types';
 import { useBookingStore } from '../stores/bookingStore';
-import { format } from 'date-fns';
 
 const props = defineProps<{
   selectedSeat: Seat | null;
@@ -11,12 +10,6 @@ const props = defineProps<{
   endTime: string;
   selectedDate: string;
   onBook: () => void;
-}>();
-
-const emit = defineEmits<{
-  (e: 'update:userName', value: string): void;
-  (e: 'update:startTime', value: string): void;
-  (e: 'update:endTime', value: string): void;
 }>();
 
 const bookingStore = useBookingStore();

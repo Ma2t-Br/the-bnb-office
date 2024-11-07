@@ -35,7 +35,7 @@ const meetingRooms: Seat[] = [
   { id: 'thibs', name: 'Thibs', type: 'thibs' },
 ];
 
-const selectSeat = (seat: Seat) => {
+const onSeatSelect = (seat: Seat) => {
   selectedSeat.value = seat;
 };
 
@@ -97,13 +97,15 @@ onMounted(() => {
       <TableLayout
         :seats="mainTableSeats"
         :selected-seat-id="selectedSeat?.id ?? null"
-        :on-seat-select="selectSeat"
+        :on-seat-select="onSeatSelect"
+        :selectedDate="selectedDate"
+        @seatSelect="onSeatSelect"
       />
 
       <MeetingRooms
         :rooms="meetingRooms"
         :selected-seat-id="selectedSeat?.id ?? null"
-        :on-room-select="selectSeat"
+        :on-room-select="onSeatSelect"
       />
 
       <BookingForm
@@ -112,6 +114,7 @@ onMounted(() => {
         :user-name="userName"
         :start-time="startTime"
         :end-time="endTime"
+        :selectedDate="selectedDate"
         @update:user-name="userName = $event"
         @update:start-time="startTime = $event"
         @update:end-time="endTime = $event"

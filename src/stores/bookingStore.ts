@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
-import { collection, addDoc, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { ref } from 'vue';
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import type { Booking } from '../types';
 

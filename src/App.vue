@@ -1,21 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import OpenSpaceView from './views/OpenSpaceView.vue';
 import RoomsView from './views/RoomsView.vue';
+import LoadingScreen from './components/LoadingScreen.vue';
 
 const currentView = ref<'openspace' | 'rooms'>('openspace');
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const isLoading = ref(true);
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1500);
+});
 </script>
 
 <template>
-  <div class="w-full min-h-screen bg-gray-100 dark:bg-gray-900">
+  <LoadingScreen v-if="isLoading" />
+  
+  <div v-else class="w-full min-h-screen bg-gray-100 dark:bg-gray-900">
     <nav class="bg-white dark:bg-gray-800 shadow mb-6">
       <div class="max-w-lg mx-auto px-4">
         <div class="flex items-center justify-between py-3">
           <div class="flex items-center space-x-3">
-            <img src="/src/assets/vue.svg" alt="Logo" class="w-6 h-6" />
+            <img src="/src/assets/BnBOffice_Logo.svg" alt="Logo" class="w-10 h-10" />
             <div class="flex space-x-4">
               <button
                 @click="currentView = 'openspace'"

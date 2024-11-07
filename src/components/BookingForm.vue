@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Seat, Booking } from '../types';
+import type { Seat } from '../types';
 import { useBookingStore } from '../stores/bookingStore';
+import TimelineView from './TimelineView.vue';
 
 const props = defineProps<{
   selectedSeat: Seat | null;
@@ -18,10 +19,6 @@ const existingBookings = computed(() => {
   if (!props.selectedSeat || !props.selectedDate) return [];
   return bookingStore.getBookingsForSeat(props.selectedSeat.id, props.selectedDate);
 });
-
-const formatBookingTime = (booking: Booking) => {
-  return `${booking.startTime} - ${booking.endTime}`;
-};
 
 const hasTimeConflict = computed(() => {
   const start = props.startTime;
@@ -60,11 +57,7 @@ const isBookingValid = computed(() => {
       <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
         Périodes réservées :
       </p>
-      <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-        <li v-for="booking in existingBookings" :key="booking.id">
-          {{ formatBookingTime(booking) }} par {{ booking.userName }}
-        </li>
-      </ul>
+      <TimelineView :bookings="existingBookings" />
     </div>
 
     <div class="flex gap-2 mb-2">
